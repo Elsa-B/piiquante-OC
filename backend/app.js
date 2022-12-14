@@ -4,8 +4,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 //Commande d'import de user depuis le dossier routes
 const userRoutes = require('./routes/user');
-//Intercepte toutes les requêtes
-//app.use(express.json())
 
 mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -15,7 +13,8 @@ mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?ret
 
 //Appel de la méthode express, qui permet de créer l'application express
 const app = express();
-
+//Intercepte toutes les requêtes
+app.use(express.json())
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -23,10 +22,11 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use((req, res) => {
    res.json({ message: 'Votre requête a bien été reçue !' }); 
 });
 
-app.use('/api/auth', userRoutes)
+app.use('/api/auth', userRoutes);
 //Export de la méthode express
 module.exports = app;
