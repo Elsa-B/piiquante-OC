@@ -2,6 +2,7 @@
 const express = require('express');
 //Commande d'import mongoose
 const mongoose = require('mongoose');
+const sauceRoutes = require('./routes/sauce');
 //Commande d'import de user depuis le dossier routes
 const userRoutes = require('./routes/user');
 
@@ -23,10 +24,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use((req, res) => {
-   res.json({ message: 'Votre requête a bien été reçue !' }); 
-});
-
+app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 //Export de la méthode express
 module.exports = app;
