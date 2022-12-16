@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const sauceRoutes = require('./routes/sauce');
 //Commande d'import de user depuis le dossier routes
 const userRoutes = require('./routes/user');
+const path = require('path');
+//Appel de la méthode express, qui permet de créer l'application express
+const app = express();
 
 mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -12,10 +15,9 @@ mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?ret
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-//Appel de la méthode express, qui permet de créer l'application express
-const app = express();
 //Intercepte toutes les requêtes
 app.use(express.json())
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -23,6 +25,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 //Export de la méthode express

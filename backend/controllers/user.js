@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
       //Message d'erreur. Erreur 500 (erreur serveur)
       .catch(error => res.status(500).json({ error }));
   };
+
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
