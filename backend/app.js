@@ -8,7 +8,7 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 //Appel de la méthode express, qui permet de créer l'application express
 const app = express();
-
+//Package Mongoose
 mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -17,7 +17,7 @@ mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?ret
 
 //Intercepte toutes les requêtes
 app.use(express.json())
-
+//Ajout des headers pour communiquer entre les deux "localhost"
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
