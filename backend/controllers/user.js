@@ -25,10 +25,11 @@ exports.signup = (req, res, next) => {
   };
 
 exports.login = (req, res, next) => {
+    console.log(req.body);
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'});
+                return res.status(401).json({ message: 'login/mot de passe incorrecte'});
             }
             bcrypt.compare(req.body.password, user.password)
             //Utilisation de compare pour comparer le mot de passe de l'user et le hash
