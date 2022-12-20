@@ -1,7 +1,7 @@
 //Import de http et app.js
 const http = require('http');
 const app = require('./app');
-//Renvoie du port valide, d'un numéro ou d'une chaîne
+//Renvoie du port valide, qu'il soit un numéro ou une chaîne
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -13,8 +13,8 @@ const normalizePort = val => {
   }
   return false;
 };
-
-const port = normalizePort(process.env.PORT || '3000');
+//Sur quel port tourne l'application
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 //Recherche des différentes erreurs et les gère, puis enregistrement dans le serveur
 const errorHandler = error => {
@@ -36,7 +36,7 @@ const errorHandler = error => {
       throw error;
   }
 };
-
+//Crée du serveur et le retourne
 const server = http.createServer(app);
 
 server.on('error', errorHandler);
