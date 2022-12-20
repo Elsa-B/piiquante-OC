@@ -8,7 +8,7 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 //Appel de la méthode express, qui permet de créer l'application express
 const app = express();
-//Package Mongoose
+//Package Mongoose permettant la connexion à la base de donnée
 mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
