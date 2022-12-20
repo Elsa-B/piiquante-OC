@@ -1,6 +1,7 @@
+//Import des différentes applications
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
 //Fonction pour une inscription utilisateur
 exports.signup = (req, res, next) => {
@@ -23,13 +24,16 @@ exports.signup = (req, res, next) => {
       //Message d'erreur. Erreur 500 (erreur serveur)
       .catch(error => res.status(500).json({ error }));
   };
-
+//Fonction pour un utilisateur déjà inscrit
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
+    //La requête est la bonne
         .then(user => {
+            //Si l'utilisateur n'existe pas 
             if (!user) {
                 return res.status(401).json({ message: 'Login ou mot de passe incorrect'});
             }
+            //Si l'utilisateur existe
             bcrypt.compare(req.body.password, user.password)
             //Utilisation de compare pour comparer le mot de passe de l'user et le hash
                 .then(valid => {
@@ -40,7 +44,7 @@ exports.login = (req, res, next) => {
                     //S'il est bon, réponse 200
                     res.status(200).json({
                         userId: user._id,
-                        //Utilisation de sign de jsonwebtoken pour chiffrer un token
+                        //Utilisation de sign de jsonwebtoken pour chiffrer un token. Contient l'Id de l'utilisateur, une chaîne secrète et une durée de validité du TOKEN
                         token: jwt.sign(
                             { userId: user._id },
                             'RANDOM_TOKEN_SECRET',
