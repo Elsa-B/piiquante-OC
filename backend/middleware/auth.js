@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');//Import de jsonwebtoken
  
 module.exports = (req, res, next) => {
    try {
-       const token = req.headers.authorization.split(' ')[1];
-       const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+       const token = req.headers.authorization.split(' ')[1];//On extrait le token du header "authorization", et on utilise split pour tout récupérer
+       const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');//Utilisation de verify pour décoder le token
        const userId = decodedToken.userId;
-       if (req.body.userId && req.body.userId !== userId) {
+       if (req.body.userId && req.body.userId !== userId) {//Si l'utilisateur n'est pas le bon, retourne un message d'erreur 
         throw 'userId non valide';
       } else {
         next();
