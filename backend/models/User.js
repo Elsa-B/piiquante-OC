@@ -1,6 +1,6 @@
 //Import de mongoDB
 const mongoose = require('mongoose');
-//Import de mongoose-unique-validator
+//Import de mongoose-unique-validator pour vérifier l'emil unique
 const uniqueValidator = require('mongoose-unique-validator');
 //Schéma de données pour indiquer le type et le caractère
 const userSchema = mongoose.Schema({

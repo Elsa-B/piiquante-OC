@@ -2,11 +2,12 @@
 const express = require('express');
 //Commande d'import mongoose
 const mongoose = require('mongoose');
-const helmet = require("helmet");//Import de helmet
-const sauceRoutes = require('./routes/sauce');
-//Commande d'import de user depuis le dossier routes
-const userRoutes = require('./routes/user');
+const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');
+
+//Commande d'import des users et des sauces depuis le dossier routes
+const userRoutes = require('./routes/user');
+const sauceRoutes = require('./routes/sauce');
 //Appel de la méthode express, qui permet de créer l'application express
 const app = express();
 

@@ -10,7 +10,9 @@ exports.createSauce = (req, res, next) => {
   const sauce = new Sauce({
     ...sauceObject,
     //Résolution de l'URL http de l'image
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    likes: 0,
+    dislikes: 0
   });
   //Sauvegarde de la sauce dans la base de donnée
   sauce.save()
@@ -75,20 +77,22 @@ exports.likeSauce = (req, res, next)=>{
   let like = req.body.like;
   //Si l'utilisateur aime la sauce
   if(like===1){
-    Sauce.updateOne({ _id: req.params.id },
+    Sauce.updateOne({ _id: req.params.id },//Mise à jour de la sauce
+      //Ajout d'un like, envoie de l'information à la sauce
       { $inc: {likes: 1}, $push: {usersLiked: req.body.userId}, _id: req.params.id})
       .then(() => res.status(200).json({ message: 'Vous aimez la sauce !' }))
       .catch(error => res.status(400).json({error}));
-  }else if(like===-1){
+  }else if(like===-1){//Si l'utilisateur n'aime pas
     Sauce.updateOne({ _id: req.params.id },
       { $inc: {dislikes: 1}, $push: {usersDisliked: req.body.userId}, _id: req.params.id})
       .then(() => res.status(200).json({ message: 'Vous n\'aimez pas la sauce !' }))
       .catch(error => res.status(400).json({error}));
   }else{
-    Sauce.findOne({ _id: req.params.id })
+    Sauce.findOne({ _id: req.params.id })//On cherche l'objet ayant le même id
     .then(sauce=>{
-      if(sauce.usersLiked.includes(req.body.userId)){
-        Sauce.updateOne({ _id: req.params.id },
+      if(sauce.usersLiked.includes(req.body.userId)){//Détermine si le tableau contient la valeur
+        Sauce.updateOne({ _id: req.params.id },//Mise à jour de la sauce
+        //Retire un like, suppression d'un élément de la sauce
           { $inc: {likes: -1}, $pull: {usersLiked: req.body.userId}, _id: req.params.id})
           .then(() => res.status(200).json({ message: 'Vous avez retiré votre like !' }))
           .catch(error => res.status(400).json({error}));
