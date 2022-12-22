@@ -29,6 +29,8 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
+//Permet l'affichage des images suite à l'ajout d'helmet
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
