@@ -1,6 +1,5 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
-const sauce = require('../models/sauce');
 
 //Création d'une sauce
 exports.createSauce = (req, res, next) => {
@@ -19,7 +18,7 @@ exports.createSauce = (req, res, next) => {
   .catch((error) => res.status(400).json({ error: error }));
 };
 
-
+//Modification d'une sauce
 exports.modifySauce = (req, res, next) => {
   //Création d'un objet qui vérifie si le fichier existe ou pas
   const sauceObject = req.file ? {
@@ -30,22 +29,21 @@ exports.modifySauce = (req, res, next) => {
    Sauce.findOne({_id: req.params.id})
    .then((sauce)=>{
     if(sauce.userId != req.auth.userId){//Si l'utilisateur n'a pas le même id que la sauce
-      res.status(401).json({message : 'Action non autorisée'})
+      res.status(403).json({message : 'Requête non autorisée'})
     }else{//Sinon on met à jour la sauce
       Sauce.updateOne({_id : req.params.id}, {...sauceObject, _id:req.params.id})
-      .then(()=> res.status(200).json ({message : 'Sauce modifiée'}))
-      .catch(error=> res.status(401).json({error}));
+      .then(()=> res.status(201).json ({message : 'Sauce modifiée'}))
+      .catch(error=> res.status(400).json({error}));
     }
    })
-   .catch((error)=> res.status(400).json({error}));
 };
 
-
+//Suppression d'une sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id})//On recherche la sauce ayant le même id que la requête
     .then(sauce => {
         if (sauce.userId != req.auth.userId) {//Si l'utilisateur n'est pas le bon
-            res.status(401).json({message: 'Pas autorisé'});
+            res.status(403).json({message: 'Requête non autorisée'});
         } else {//Si c'est le bon, on récupère le nom de fichier
             const filename = sauce.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {//On supprime un fichier du système de fichier
