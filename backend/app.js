@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');
+const expressMongoSanitize = require('express-mongo-sanitize');
 
 //Commande d'import des users et des sauces depuis le dossier routes
 const userRoutes = require('./routes/user');
@@ -28,9 +29,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(expressMongoSanitize());
 app.use(helmet());
 //Permet l'affichage des images suite à l'ajout d'helmet
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
+
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
