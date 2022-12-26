@@ -1,6 +1,6 @@
 //Commande pour importer express
 const express = require('express');
-//Commande d'import mongoose
+//Commande d'import mongoDB
 const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');//Manipule les chemins de fichier

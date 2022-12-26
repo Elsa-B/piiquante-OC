@@ -1,4 +1,3 @@
-//Import de mongoDB
 const mongoose = require('mongoose');
 //Import de mongoose-unique-validator pour vérifier l'emil unique
 const uniqueValidator = require('mongoose-unique-validator');

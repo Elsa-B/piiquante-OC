@@ -1,4 +1,3 @@
-//Imort de mongoose
 const mongoose = require('mongoose');
 //Schéma de données pour indiquer le type et le caractère
 const sauceSchema = mongoose.Schema({

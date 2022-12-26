@@ -4,7 +4,7 @@ const router = express.Router();//Création de routeurs séparés
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
-const sauceCtrl = require('../controllers/sauce');//Import des sauces dans le contrôleur
+const sauceCtrl = require('../controllers/sauce');
 
 //Routes de chaque fichier
 router.post('/', auth,multer, sauceCtrl.createSauce);
