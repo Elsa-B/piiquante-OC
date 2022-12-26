@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');//Manipule les chemins de fichier
 const expressMongoSanitize = require('express-mongo-sanitize');//Pour protéger des injections
-
+require('dotenv').config();
+console.log(process.env.USER_DB)
+console.log(process.env.SECRET_DB);
 //Commande d'import des users et des sauces depuis le dossier routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
@@ -13,7 +15,7 @@ const sauceRoutes = require('./routes/sauce');
 const app = express();
 
 //Package Mongoose permettant la connexion à la base de donnée
-mongoose.connect('mongodb+srv://abwb:projet6oc@cluster0.wzvyrvy.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect(process.env.USER_DB,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
