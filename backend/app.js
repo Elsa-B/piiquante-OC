@@ -3,7 +3,7 @@ const express = require('express');
 //Commande d'import mongoose
 const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
-const path = require('path');
+const path = require('path');//Manipule les chemins de fichier
 const expressMongoSanitize = require('express-mongo-sanitize');//Pour protéger des injections
 
 //Commande d'import des users et des sauces depuis le dossier routes
