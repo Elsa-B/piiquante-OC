@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 //Schéma de données pour indiquer le type et le caractère
 const sauceSchema = mongoose.Schema({
+  userId: {type: String, required: true},
   name: { type: String, required: true },
   manufacturer: { type: String, required: true },
   description: { type: String, required: true },

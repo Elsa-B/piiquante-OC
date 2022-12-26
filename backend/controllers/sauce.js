@@ -45,17 +45,19 @@ exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id})//On recherche la sauce ayant le même id que la requête
     .then(sauce => {
         if (sauce.userId != req.auth.userId) {//Si l'utilisateur n'est pas le bon
-            res.status(403).json({message: 'Requête non autorisée'});
+            res.status(403).json({message: 'Requête non autorisée'});  
         } else {//Si c'est le bon, on récupère le nom de fichier
             const filename = sauce.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {//On supprime un fichier du système de fichier
                 Sauce.deleteOne({_id: req.params.id})//On supprime la sauce
                     .then(() => { res.status(200).json({message: 'Objet supprimé !'})})
-                    .catch(error => res.status(401).json({ error }));
+                    .catch(error => res.status(500).json({ error }));
             });
           }
     })
-    .catch( error => { res.status(500).json({ error });
+    .catch( error => { 
+      res.status(500).json({ error });
+      console.log(error);
   });
 };
 
