@@ -6,8 +6,7 @@ const helmet = require('helmet');//Import de helmet, pour protéger des vulnéra
 const path = require('path');//Manipule les chemins de fichier
 const expressMongoSanitize = require('express-mongo-sanitize');//Pour protéger des injections
 require('dotenv').config();
-console.log(process.env.USER_DB)
-console.log(process.env.SECRET_DB);
+
 //Commande d'import des users et des sauces depuis le dossier routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');

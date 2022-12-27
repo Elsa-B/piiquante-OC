@@ -46,7 +46,7 @@ exports.login = (req, res, next) => {
                         //Utilisation de sign de jsonwebtoken pour chiffrer un token. Contient l'Id de l'utilisateur, une chaîne secrète et une durée de validité du TOKEN
                         token: jwt.sign(
                             { userId: user._id },
-                            'RANDOM_TOKEN_SECRET',
+                            process.env.SECRET_DB,
                             { expiresIn: '24h' }
                         )
                     });
