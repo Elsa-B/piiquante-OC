@@ -1,13 +1,10 @@
-//Commande pour importer express
 const express = require('express');
-//Commande d'import mongoDB
 const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');//Manipule les chemins de fichier
 const expressMongoSanitize = require('express-mongo-sanitize');//Pour protéger des injections
-require('dotenv').config();
+require('dotenv').config();//Permet de placer dans un fichier les informations sensilbles
 
-//Commande d'import des users et des sauces depuis le dossier routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 //Appel de la méthode express, qui permet de créer l'application express

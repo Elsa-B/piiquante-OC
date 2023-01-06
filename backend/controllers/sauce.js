@@ -24,13 +24,16 @@ exports.createSauce = (req, res, next) => {
 exports.modifySauce = (req, res, next) => {
   //Création d'un objet qui vérifie si le fichier existe ou pas
   const sauceObject = req.file ? {
-    ...JSON.parse(req.body.sauce),//On récupère l'objet en chaîne de caractère
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`//URL de l'image que l'on récupère
+    //On récupère l'objet en chaîne de caractère
+    ...JSON.parse(req.body.sauce),
+    //URL de l'image que l'on récupère
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
    } : { ...req.body };
    //On recherche la sauce ayant le même id que la requête
    Sauce.findOne({_id: req.params.id})
    .then((sauce)=>{
-    if(sauce.userId != req.auth.userId){//Si l'utilisateur n'a pas le même id que la sauce
+    //Si l'utilisateur n'a pas le même id que la sauce
+    if(sauce.userId != req.auth.userId){
       res.status(403).json({message : 'Requête non autorisée'})
     }else{//Sinon on met à jour la sauce
       Sauce.updateOne({_id : req.params.id}, {...sauceObject, _id:req.params.id})
@@ -42,14 +45,17 @@ exports.modifySauce = (req, res, next) => {
 
 //Suppression d'une sauce
 exports.deleteSauce = (req, res, next) => {
-  Sauce.findOne({ _id: req.params.id})//On recherche la sauce ayant le même id que la requête
+  //On recherche la sauce ayant le même id que la requête
+  Sauce.findOne({ _id: req.params.id})
     .then(sauce => {
         if (sauce.userId != req.auth.userId) {//Si l'utilisateur n'est pas le bon
             res.status(403).json({message: 'Requête non autorisée'});  
         } else {//Si c'est le bon, on récupère le nom de fichier
             const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {//On supprime un fichier du système de fichier
-                Sauce.deleteOne({_id: req.params.id})//On supprime la sauce
+            //On supprime un fichier du système de fichier
+            fs.unlink(`images/${filename}`, () => {
+                //On supprime la sauce
+                Sauce.deleteOne({_id: req.params.id})
                     .then(() => { res.status(200).json({message: 'Sauce supprimée !'})})
                     .catch(error => res.status(500).json({ error }));
             });

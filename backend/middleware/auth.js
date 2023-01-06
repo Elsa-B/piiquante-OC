@@ -1,9 +1,11 @@
-const jwt = require('jsonwebtoken');//Import de jsonwebtoken
+const jwt = require('jsonwebtoken');
  
 module.exports = (req, res, next) => {
    try {
-       const token = req.headers.authorization.split(' ')[1];//On extrait le token du header "authorization", et on utilise split pour tout récupérer
-       const decodedToken = jwt.verify(token, process.env.SECRET_DB);//Utilisation de verify pour décoder le token
+      //On extrait le token du header "authorization", et on utilise split pour tout récupérer
+       const token = req.headers.authorization.split(' ')[1];
+       //Utilisation de verify pour décoder le token
+       const decodedToken = jwt.verify(token, process.env.SECRET_DB);
        const userId = decodedToken.userId;
         req.auth = {userId}
          next();

@@ -1,4 +1,4 @@
-const multer = require('multer');//Import de multer
+const multer = require('multer');
 //Objet avec les différents types d'images
 const MIME_TYPES = {
   'image/jpg': 'jpg',
@@ -11,9 +11,12 @@ const storage = multer.diskStorage({//Enregistrement sur le disque
     callback(null, 'images');//Pas d'erreur, nom du dossier
   },
   filename: (req, file, callback) => {
-    const name = file.originalname.split(' ').join('_');//On génère le nom du fichier.On supprime les espaces et instaure des underscores dans le nom de fichier
-    const extension = MIME_TYPES[file.mimetype];//Création de l'extension de fichier 
-    callback(null, name + Date.now() + '.' + extension);//On appel le callback avec le nom de fichier
+    //On génère le nom du fichier.On supprime les espaces et instaure des underscores dans le nom de fichier
+    const name = file.originalname.split(' ').join('_');
+    //Création de l'extension de fichier 
+    const extension = MIME_TYPES[file.mimetype];
+    //On appel le callback avec le nom de fichier
+    callback(null, name + Date.now() + '.' + extension);
   }
 });
 //On exporte multer avec l'objet storage et le fichier unique

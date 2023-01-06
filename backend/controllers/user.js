@@ -16,11 +16,9 @@ exports.signup = (req, res, next) => {
         });
         //Enregistrement du user dans la base de données
         user.save()
-        //Si enregistrement réussi, status 201(créé), sinon message d'erreur
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
           .catch(error => res.status(400).json({ error }));
       })
-      //Message d'erreur. Erreur 500 (erreur serveur)
       .catch(error => res.status(500).json({ error }));
   };
 //Fonction pour un utilisateur déjà inscrit
