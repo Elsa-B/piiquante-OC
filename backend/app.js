@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');//Import de helmet, pour protéger des vulnérabilités les plus courantes
 const path = require('path');//Manipule les chemins de fichier
 const expressMongoSanitize = require('express-mongo-sanitize');//Pour protéger des injections
-require('dotenv').config();//Permet de placer dans un fichier les informations sensilbles
+require('dotenv').config();//Permet de placer dans un fichier les informations sensibles
 
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
