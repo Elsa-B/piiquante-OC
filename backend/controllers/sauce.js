@@ -3,7 +3,7 @@ const fs = require('fs');
 
 //Création d'une sauce
 exports.createSauce = (req, res, next) => {
-  const sauceObject = JSON.parse(req.body.sauce);
+  const sauceObject = {...JSON.parse(req.body.sauce), userId: req.auth.userId};
   //suppression du champs id
   delete sauceObject._id;
   //Création d'un objet sauce
@@ -36,7 +36,7 @@ exports.modifySauce = (req, res, next) => {
     if(sauce.userId != req.auth.userId){
       res.status(403).json({message : 'Requête non autorisée'})
     }else{//Sinon on met à jour la sauce
-      Sauce.updateOne({_id : req.params.id}, {...sauceObject, _id:req.params.id})
+      Sauce.updateOne({_id : req.params.id}, {...sauceObject})
       .then(()=> res.status(201).json ({message : 'Sauce modifiée'}))
       .catch(error=> res.status(400).json({error}));
     }
@@ -55,7 +55,7 @@ exports.deleteSauce = (req, res, next) => {
             //On supprime un fichier du système de fichier
             fs.unlink(`images/${filename}`, () => {
                 //On supprime la sauce
-                Sauce.deleteOne({_id: req.params.id})
+                sauce.delete()
                     .then(() => { res.status(200).json({message: 'Sauce supprimée !'})})
                     .catch(error => res.status(500).json({ error }));
             });
